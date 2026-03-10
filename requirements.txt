@@ -1,0 +1,18 @@
+# Core ML framework (CPU build; swap for CUDA/MPS index when GPU is available)
+torch>=2.2.0
+torchvision>=0.17.0
+
+# Skeleton extraction
+mediapipe>=0.10.9
+
+# Video / image I/O
+opencv-python-headless>=4.9.0
+
+# Numerical & data
+numpy>=1.26.0
+h5py>=3.10.0
+pandas>=2.2.0
+
+# Dev / quality
+ruff>=0.3.0
+pytest>=8.0.0
