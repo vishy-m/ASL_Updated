@@ -1,0 +1,69 @@
+{
+  "goal_glosses": [
+    "BOOK"
+  ],
+  "goal_selection": {
+    "min_glosses_per_sequence": 2,
+    "min_how2sign_frequency": 10,
+    "min_wlasl_frequency": 4,
+    "shared_vocab_size": 30,
+    "stopwords": [
+      "A",
+      "AN",
+      "AND",
+      "ARE",
+      "AS",
+      "AT",
+      "BE",
+      "FOR",
+      "HE",
+      "I",
+      "IN",
+      "IS",
+      "IT",
+      "ME",
+      "MY",
+      "OF",
+      "ON",
+      "OR",
+      "OUR",
+      "SHE",
+      "THAT",
+      "THE",
+      "THEY",
+      "THIS",
+      "TO",
+      "US",
+      "WE",
+      "WITH",
+      "YOU",
+      "YOUR"
+    ]
+  },
+  "source_manifests": {
+    "how2sign": "data/processed/how2sign/manifest.jsonl",
+    "wlasl": "data/processed/manifests/wlasl.jsonl"
+  },
+  "splits": {
+    "cslr_full": {
+      "test": 2339,
+      "train": 31027,
+      "val": 1739
+    },
+    "cslr_goal": {
+      "test": 0,
+      "train": 15,
+      "val": 0
+    },
+    "islr": {
+      "test": 0,
+      "train": 4,
+      "val": 1
+    },
+    "islr_goal": {
+      "test": 0,
+      "train": 4,
+      "val": 1
+    }
+  }
+}

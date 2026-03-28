@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -m pytest tests/ -q)",
+      "Bash(source activate:*)",
+      "Bash(conda activate:*)",
+      "Read(//Users/vishruth/miniforge3/envs/asl/bin/**)",
+      "Read(//Users/vishruth/miniconda3/envs/asl/bin/**)",
+      "Read(//opt/homebrew/Caskroom/miniforge/base/envs/asl/bin/**)",
+      "Read(//opt/**)",
+      "Bash(pip3 install:*)",
+      "Bash(python3 -m pytest /Volumes/T7/ASL/tests -q)",
+      "Bash(python3 -c \"import torch; print\\(''torch OK''\\)\")",
+      "Bash(python3 -c \"import numpy; print\\(''numpy OK''\\)\")",
+      "Bash(python3 -c \"import cv2; print\\(''cv2 OK''\\)\")",
+      "Bash(python3 -c \"import ast; ast.parse\\(open\\(''/Volumes/T7/ASL/asl_cslr/training/train_cslr.py''\\).read\\(\\)\\); print\\(''OK''\\)\")",
+      "Bash(python3 -c \"import ast; ast.parse\\(open\\(''asl_cslr/training/train_cslr.py''\\).read\\(\\)\\); print\\(''Syntax OK''\\)\")",
+      "Bash(python3 -c \"import ast; ast.parse\\(open\\(''/Volumes/T7/ASL/asl_cslr/online/web_server.py''\\).read\\(\\)\\); print\\(''web_server.py: Syntax OK''\\)\")",
+      "Bash(python3 -c \":*)"
+    ]
+  }
+}

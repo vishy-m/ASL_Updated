@@ -1,0 +1,79 @@
+# CSLR training on ASL Citizen + Kaggle WLASL for a wider 30-gloss set.
+
+model:
+  type: "cslr"
+  input_dim: 364
+  frame_feature_dim: 208
+  motion_dim: 156
+  encoder_type: "bilstm"
+  conv_dim: 192
+  conv_layers: 2
+  conv_kernel_size: 5
+  conv_dropout: 0.28
+  lstm_hidden_size: 192
+  lstm_layers: 2
+  lstm_dropout: 0.38
+  use_motion: true
+  multi_scale: false
+  dual_stream: false
+
+training:
+  epochs: 6
+  batch_size: 8
+  learning_rate: 5.0e-5
+  weight_decay: 0.03
+  optimizer: "adamw"
+  scheduler: "cosine"
+  warmup_epochs: 2
+  grad_clip_norm: 1.0
+  pretrained_backbone: "checkpoints/islr_kaggle_expanded30/best.pt"
+  t_max: 320
+  mixed_precision: true
+  amp_dtype: "float16"
+  amp_exclude_ctc: true
+  balanced_sampling: true
+  ctc_blank_bias_init: -1.0
+  ctc_gloss_prior_smoothing: 1.0
+  ctc_gloss_prior_scale: 0.35
+
+data:
+  train_manifest: "data/processed/kaggle_expanded30/manifests/cslr_demo_train.jsonl"
+  val_manifest: "data/processed/kaggle_expanded30/manifests/cslr_demo_val.jsonl"
+  test_manifest: "data/processed/kaggle_expanded30/manifests/cslr_demo_test.jsonl"
+  vocab_path: "data/processed/kaggle_expanded30/manifests/demo_vocab.json"
+  num_workers: 4
+  pin_memory: false
+
+checkpointing:
+  save_dir: "checkpoints/cslr_kaggle_expanded30_motion"
+  save_every_n_epochs: 2
+  keep_top_k: 3
+
+logging:
+  tensorboard_dir: "runs/cslr_kaggle_expanded30_motion"
+  log_every_n_steps: 25
+
+evaluation:
+  decode_every_n_epochs: 1
+  metrics:
+    - "wer"
+    - "cer"
+
+augmentation:
+  enabled: true
+  spatial_jitter_std: 0.012
+  scale_range: [0.90, 1.10]
+  rotation_range_deg: [-12.0, 12.0]
+  pitch_range_deg: [-14.0, 14.0]
+  yaw_range_deg: [-18.0, 18.0]
+  translate_range: 0.04
+  temporal_crop_ratio: [0.86, 1.0]
+  temporal_drop_ratio: 0.07
+  flip_prob: 0.0
+  allow_horizontal_flip: false
+  joint_dropout_prob: 0.06
+  hand_dropout_prob: 0.20
+  hand_dropout_ratio: [0.08, 0.28]
+  pose_dropout_prob: 0.12
+  pose_dropout_ratio: [0.06, 0.18]
+  speed_perturb_range: [0.86, 1.14]

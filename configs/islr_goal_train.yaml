@@ -1,0 +1,72 @@
+# Goal-vocabulary ISLR fine-tuning config.
+# Starts from the full WLASL backbone and adapts it to the shared CSLR vocabulary.
+
+model:
+  type: "islr"
+  input_dim: 364
+  frame_feature_dim: 208
+  motion_dim: 156
+  encoder_type: "bilstm"
+  conv_dim: 256
+  conv_layers: 3
+  conv_kernel_size: 5
+  conv_dropout: 0.1
+  lstm_hidden_size: 256
+  lstm_layers: 2
+  lstm_dropout: 0.2
+  fc_dropout: 0.2
+  pool: "mean"
+  use_motion: true
+  multi_scale: true
+  multi_scale_kernels: [3, 5, 9]
+
+training:
+  epochs: 12
+  batch_size: 32
+  learning_rate: 4.0e-4
+  weight_decay: 0.01
+  optimizer: "adamw"
+  scheduler: "cosine"
+  warmup_epochs: 3
+  grad_clip_norm: 1.0
+  balanced_sampling: true
+  mixed_precision: true
+  amp_dtype: "float16"
+  pretrained_backbone: "checkpoints/islr/best.pt"
+
+data:
+  train_manifest: "data/processed/manifests/islr_goal_train.jsonl"
+  val_manifest: "data/processed/manifests/islr_goal_val.jsonl"
+  test_manifest: "data/processed/manifests/islr_goal_test.jsonl"
+  vocab_path: "data/processed/manifests/goal_vocab.json"
+  num_workers: 8
+  pin_memory: false
+
+checkpointing:
+  save_dir: "checkpoints/islr_goal"
+  save_every_n_epochs: 5
+  keep_top_k: 3
+  selection_metric: "macro_accuracy"
+
+logging:
+  tensorboard_dir: "runs/islr_goal"
+  log_every_n_steps: 20
+
+evaluation:
+  metrics:
+    - "top1_accuracy"
+    - "top5_accuracy"
+    - "macro_accuracy"
+
+augmentation:
+  enabled: true
+  spatial_jitter_std: 0.01
+  scale_range: [0.92, 1.08]
+  rotation_range_deg: [-7.0, 7.0]
+  translate_range: 0.04
+  temporal_crop_ratio: [0.85, 1.0]
+  temporal_drop_ratio: 0.08
+  flip_prob: 0.0
+  allow_horizontal_flip: false
+  joint_dropout_prob: 0.04
+  speed_perturb_range: [0.85, 1.15]

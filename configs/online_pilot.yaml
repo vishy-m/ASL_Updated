@@ -1,0 +1,54 @@
+# Online Inference Configuration for pilot checkpoints
+default_mode: islr
+
+camera:
+  device_id: 0
+  capture_fps: 30
+  capture_width: 1280
+  capture_height: 720
+  inference_width: 960
+  inference_height: 540
+  downsample_factor: 2
+  smoothing_alpha: 0.75
+  max_pending_timestamps: 1
+  holistic_model_path: "models/mediapipe/holistic_landmarker.task"
+  min_face_detection_confidence: 0.5
+  min_face_landmarks_confidence: 0.5
+  min_pose_detection_confidence: 0.5
+  min_pose_landmarks_confidence: 0.5
+  min_hand_landmarks_confidence: 0.5
+  min_face_suppression_threshold: 0.5
+  min_pose_suppression_threshold: 0.5
+  pose_visibility_threshold: 0.5
+  pose_presence_threshold: 0.5
+  hand_visibility_threshold: null
+  hand_presence_threshold: null
+
+islr:
+  enabled: true
+  checkpoint: "checkpoints/islr_pilot/epoch_020.pt"
+  vocab_path: "data/processed/pilot/manifests/pilot_vocab.json"
+  effective_fps: 15
+  window_duration_sec: 2.0
+  hop_duration_sec: 0.5
+  stability_windows: 2
+  confidence_threshold: 0.6
+  confidence_margin_threshold: 0.08
+  motion_energy_threshold: 0.01
+  min_buffer_frames: 8
+
+cslr:
+  enabled: true
+  checkpoint: "checkpoints/cslr_pilot/best.pt"
+  vocab_path: "data/processed/pilot/manifests/pilot_vocab.json"
+  buffer_duration_sec: 3.0
+  decode_interval_sec: 0.5
+  motion_energy_threshold: 0.008
+  blank_rejection_threshold: 0.88
+  min_buffer_frames: 8
+
+display:
+  show_skeleton: true
+  show_glosses: true
+  window_width: 1280
+  window_height: 720

@@ -1,0 +1,73 @@
+# Isolated Sign Language Recognition (ISLR) Training Config
+# Stage 1: Build a strong lexical dictionary model (§8.1)
+
+model:
+  type: "islr"                    # Model type selector
+  input_dim: 364                  # Packed xyz+mask frame features + coordinate velocity
+  frame_feature_dim: 208          # 52 joints × (x, y, z, observed_mask)
+  motion_dim: 156                 # Coordinate-only velocity features
+  encoder_type: "bilstm"          # 'bilstm' or 'transformer'
+  conv_dim: 256                   # Temporal conv output channels
+  conv_layers: 3                  # Number of temporal conv blocks
+  conv_kernel_size: 5             # Conv1d kernel size
+  conv_dropout: 0.1               # Dropout in conv blocks
+  lstm_hidden_size: 256           # BiLSTM hidden size per direction
+  lstm_layers: 2                  # Number of BiLSTM layers
+  lstm_dropout: 0.2               # Dropout between LSTM layers
+  fc_dropout: 0.2                 # Dropout before classification head
+  pool: "mean"                    # More stable across varied clip trim points
+  use_motion: true                # Concat velocity features for richer motion cues
+  multi_scale: true
+  multi_scale_kernels: [3, 5, 9]
+
+training:
+  epochs: 12
+  batch_size: 64
+  learning_rate: 8.0e-4
+  weight_decay: 0.01
+  optimizer: "adamw"
+  scheduler: "cosine"
+  warmup_epochs: 5
+  grad_clip_norm: 1.0
+  balanced_sampling: true
+
+  # Mixed precision on MPS
+  mixed_precision: true
+  amp_dtype: "float16"
+
+data:
+  train_manifest: "data/processed/manifests/islr_train.jsonl"
+  val_manifest: "data/processed/manifests/islr_val.jsonl"
+  test_manifest: "data/processed/manifests/islr_test.jsonl"
+  vocab_path: "data/processed/manifests/islr_vocab.json"
+  num_workers: 8
+  pin_memory: false               # Not applicable for MPS
+
+checkpointing:
+  save_dir: "checkpoints/islr"
+  save_every_n_epochs: 5
+  keep_top_k: 3                   # Keep top-k checkpoints by val accuracy
+  selection_metric: "macro_accuracy"
+
+logging:
+  tensorboard_dir: "runs/islr"
+  log_every_n_steps: 50
+
+evaluation:
+  metrics:
+    - "top1_accuracy"
+    - "top5_accuracy"
+    - "macro_accuracy"
+
+augmentation:
+  enabled: true                   # Enable data augmentation during training
+  spatial_jitter_std: 0.01
+  scale_range: [0.92, 1.08]
+  rotation_range_deg: [-7.0, 7.0]
+  translate_range: 0.04
+  temporal_crop_ratio: [0.85, 1.0]
+  temporal_drop_ratio: 0.08
+  flip_prob: 0.0
+  allow_horizontal_flip: false
+  joint_dropout_prob: 0.04
+  speed_perturb_range: [0.85, 1.15]

@@ -1,0 +1,76 @@
+# Product-oriented live CSLR subset chosen from the widened vocabulary after held-out analysis.
+
+model:
+  type: "cslr"
+  input_dim: 364
+  frame_feature_dim: 208
+  motion_dim: 156
+  encoder_type: "bilstm"
+  conv_dim: 160
+  conv_layers: 2
+  conv_kernel_size: 5
+  conv_dropout: 0.2
+  lstm_hidden_size: 160
+  lstm_layers: 2
+  lstm_dropout: 0.3
+  use_motion: true
+  multi_scale: false
+  dual_stream: false
+
+training:
+  epochs: 6
+  batch_size: 6
+  learning_rate: 8.0e-5
+  weight_decay: 0.015
+  optimizer: "adamw"
+  scheduler: "cosine"
+  warmup_epochs: 2
+  grad_clip_norm: 1.0
+  pretrained_backbone: "checkpoints/cslr_live_wide_motion_robust/best.pt"
+  t_max: 288
+  mixed_precision: true
+  amp_dtype: "float16"
+  amp_exclude_ctc: true
+  balanced_sampling: true
+
+data:
+  train_manifest: "data/processed/live_product/manifests/cslr_demo_train.jsonl"
+  val_manifest: "data/processed/live_product/manifests/cslr_demo_val.jsonl"
+  test_manifest: "data/processed/live_product/manifests/cslr_demo_test.jsonl"
+  vocab_path: "data/processed/live_product/manifests/demo_vocab.json"
+  num_workers: 4
+  pin_memory: false
+
+checkpointing:
+  save_dir: "checkpoints/cslr_live_product_motion"
+  save_every_n_epochs: 3
+  keep_top_k: 3
+
+logging:
+  tensorboard_dir: "runs/cslr_live_product_motion"
+  log_every_n_steps: 20
+
+evaluation:
+  decode_every_n_epochs: 1
+  metrics:
+    - "wer"
+    - "cer"
+
+augmentation:
+  enabled: true
+  spatial_jitter_std: 0.008
+  scale_range: [0.94, 1.06]
+  rotation_range_deg: [-8.0, 8.0]
+  pitch_range_deg: [-10.0, 10.0]
+  yaw_range_deg: [-14.0, 14.0]
+  translate_range: 0.03
+  temporal_crop_ratio: [0.90, 1.0]
+  temporal_drop_ratio: 0.05
+  flip_prob: 0.0
+  allow_horizontal_flip: false
+  joint_dropout_prob: 0.04
+  hand_dropout_prob: 0.16
+  hand_dropout_ratio: [0.08, 0.22]
+  pose_dropout_prob: 0.08
+  pose_dropout_ratio: [0.05, 0.14]
+  speed_perturb_range: [0.90, 1.10]

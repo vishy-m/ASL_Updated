@@ -1,0 +1,27 @@
+name: asl
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pip
+  - numpy>=1.24
+  - pandas>=2.0
+  - scipy>=1.11
+  - h5py>=3.9
+  - pyyaml>=6.0
+  - tqdm>=4.65
+  - pip:
+    - torch>=2.0
+    - torchvision>=0.15
+    - mediapipe>=0.10.33,<0.11
+    - opencv-python>=4.8
+    - Flask>=3.0
+    - Flask-SocketIO>=5.3
+    - simple-websocket>=1.0
+    - tensorboard>=2.14
+    - editdistance>=0.6
+    - pympi-ling>=1.70
+    - lxml>=4.9
+    - pytest>=7.0

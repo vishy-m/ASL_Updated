@@ -1,0 +1,58 @@
+# Research-oriented online configuration backed by the broader shared-vocabulary models.
+default_mode: cslr
+
+camera:
+  device_id: 0
+  capture_fps: 30
+  capture_width: 1280
+  capture_height: 720
+  inference_width: 960
+  inference_height: 540
+  downsample_factor: 2
+  smoothing_alpha: 0.75
+  max_pending_timestamps: 1
+  holistic_model_path: "models/mediapipe/holistic_landmarker.task"
+  min_face_detection_confidence: 0.5
+  min_face_landmarks_confidence: 0.5
+  min_pose_detection_confidence: 0.5
+  min_pose_landmarks_confidence: 0.5
+  min_hand_landmarks_confidence: 0.5
+  min_face_suppression_threshold: 0.5
+  min_pose_suppression_threshold: 0.5
+  pose_visibility_threshold: 0.5
+  pose_presence_threshold: 0.5
+  hand_visibility_threshold: null
+  hand_presence_threshold: null
+
+islr:
+  enabled: true
+  checkpoint: "checkpoints/islr_goal/best.pt"
+  vocab_path: "data/processed/manifests/goal_vocab.json"
+  effective_fps: 15
+  window_duration_sec: 1.75
+  hop_duration_sec: 0.35
+  stability_windows: 2
+  confidence_threshold: 0.58
+  confidence_margin_threshold: 0.08
+  motion_energy_threshold: 0.01
+  min_buffer_frames: 8
+
+cslr:
+  enabled: true
+  checkpoint: "checkpoints/cslr_synthetic/best.pt"
+  vocab_path: "data/processed/manifests/cslr_synthetic_vocab.json"
+  buffer_duration_sec: 8.0
+  decode_interval_sec: 0.35
+  stability_windows: 3
+  history_size: 6
+  motion_energy_threshold: 0.006
+  blank_rejection_threshold: 0.90
+  min_buffer_frames: 18
+  inactivity_reset_windows: 3
+  pause_commit_windows: 2
+
+display:
+  show_skeleton: true
+  show_glosses: true
+  window_width: 1280
+  window_height: 720

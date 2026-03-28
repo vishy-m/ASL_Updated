@@ -1,0 +1,64 @@
+# Accuracy-first default online configuration.
+# Current live vocabulary: BIRTHDAY, COLOR, DRINK, FINE, FINISH, NEED,
+# NOW, ORANGE, PAPER, WRONG.
+default_mode: cslr
+
+camera:
+  device_id: 0
+  capture_fps: 30
+  capture_width: 1280
+  capture_height: 720
+  inference_width: 960
+  inference_height: 540
+  downsample_factor: 2            # Process every 2nd frame → ~15 fps effective
+  smoothing_alpha: 0.75
+  max_pending_timestamps: 1
+  holistic_model_path: "models/mediapipe/holistic_landmarker.task"
+  min_face_detection_confidence: 0.5
+  min_face_landmarks_confidence: 0.5
+  min_pose_detection_confidence: 0.5
+  min_pose_landmarks_confidence: 0.5
+  min_hand_landmarks_confidence: 0.5
+  min_face_suppression_threshold: 0.5
+  min_pose_suppression_threshold: 0.5
+  pose_visibility_threshold: 0.5
+  pose_presence_threshold: 0.5
+  hand_visibility_threshold: null
+  hand_presence_threshold: null
+
+# Sliding-window ISLR mode (§9.2)
+islr:
+  enabled: false
+  checkpoint: "checkpoints/islr_goal/best.pt"
+  vocab_path: "data/processed/manifests/goal_vocab.json"
+  effective_fps: 15
+  window_duration_sec: 1.75
+  hop_duration_sec: 0.35
+  stability_windows: 2
+  confidence_threshold: 0.22
+  confidence_margin_threshold: 0.02
+  motion_energy_threshold: 0.003
+  min_buffer_frames: 6
+
+# Streaming CSLR mode (§9.3)
+cslr:
+  enabled: true
+  checkpoint: "checkpoints/cslr_live_product_motion/best.pt"
+  vocab_path: "data/processed/live_product/manifests/demo_vocab.json"
+  buffer_duration_sec: 10.0
+  decode_interval_sec: 0.30
+  stability_windows: 2
+  history_size: 5
+  cumulative_commits: false
+  motion_energy_threshold: 0.003
+  blank_rejection_threshold: 0.82
+  min_buffer_frames: 10
+  inactivity_reset_windows: 2
+  pause_commit_windows: 1
+
+# Visualization
+display:
+  show_skeleton: true
+  show_glosses: true
+  window_width: 1280
+  window_height: 720

@@ -1,0 +1,9 @@
+{"dataset": "wlasl", "features_path": "/Volumes/T7/ASL/tmp/preprocess_smoke/wlasl/07069.npz", "glosses": ["BOOK"], "id": "07069", "num_frames": 15, "split": "train"}
+{"dataset": "wlasl", "features_path": "/Volumes/T7/ASL/tmp/preprocess_smoke/wlasl/07075.npz", "glosses": ["BOOK"], "id": "07075", "num_frames": 41, "split": "train"}
+{"dataset": "wlasl", "features_path": "/Volumes/T7/ASL/tmp/preprocess_smoke/wlasl/07076.npz", "glosses": ["BOOK"], "id": "07076", "num_frames": 53, "split": "train"}
+{"dataset": "wlasl", "features_path": "/Volumes/T7/ASL/tmp/preprocess_smoke/wlasl/65225.npz", "glosses": ["BOOK"], "id": "65225", "num_frames": 30, "split": "train"}
+{"dataset": "wlasl", "features_path": "/Volumes/T7/ASL/tmp/preprocess_smoke/wlasl/68011.npz", "glosses": ["BOOK"], "id": "68011", "num_frames": 27, "split": "train"}
+{"dataset": "wlasl", "features_path": "/Volumes/T7/ASL/tmp/preprocess_smoke/wlasl/68012.npz", "glosses": ["BOOK"], "id": "68012", "num_frames": 56, "split": "train"}
+{"dataset": "wlasl", "features_path": "/Volumes/T7/ASL/tmp/preprocess_smoke/wlasl/69241.npz", "glosses": ["BOOK"], "id": "69241", "num_frames": 37, "split": "train"}
+{"dataset": "wlasl", "features_path": "/Volumes/T7/ASL/tmp/preprocess_smoke/wlasl/70266.npz", "glosses": ["BOOK"], "id": "70266", "num_frames": 60, "split": "train"}
+{"dataset": "wlasl", "features_path": "/Volumes/T7/ASL/tmp/preprocess_smoke/wlasl/70212.npz", "glosses": ["BOOK"], "id": "70212", "num_frames": 50, "split": "val"}

@@ -1,0 +1,136 @@
+{
+  "paths": {
+    "raw": {
+      "asl_citizen": "data/raw/kaggle/asl_citizen_keypoints",
+      "how2sign": "data/raw/how2sign",
+      "asllvd": "data/raw/asllvd",
+      "ncslgr": "data/raw/asllrp_ncslgr",
+      "wlasl": "data/raw/wlasl"
+    },
+    "processed": {
+      "keypoints": "data/processed/keypoints",
+      "manifests": "data/processed/manifests",
+      "pilot": "data/processed/pilot"
+    }
+  },
+  "how2sign": {
+    "splits": [
+      {
+        "name": "test",
+        "keypoints_subdir": "archive/Test_data/Test_data",
+        "annotations": "annotations/test_annotations.csv"
+      },
+      {
+        "name": "val",
+        "keypoints_subdir": "archive/Val_data/Validation_data",
+        "annotations": "annotations/val_annotations.csv"
+      },
+      {
+        "name": "train",
+        "keypoints_subdir": "archive/Train_data/Train_data",
+        "annotations": "annotations/train_annotations.csv"
+      }
+    ]
+  },
+  "pilot": {
+    "seed_vocab_path": "data/processed/manifests/islr_top10_vocab.json",
+    "shared_vocab_size": 4,
+    "min_shared_frequency": 2,
+    "max_samples_per_split": 64
+  },
+  "manifest_build": {
+    "goal": {
+      "shared_vocab_size": 15,
+      "min_wlasl_frequency": 6,
+      "min_how2sign_frequency": 15,
+      "min_glosses_per_sequence": 2,
+      "split_strategy": "stratified_per_gloss",
+      "min_val_per_gloss": 1,
+      "min_test_per_gloss": 1,
+      "stopword_glosses": [
+        "A",
+        "AN",
+        "AND",
+        "ARE",
+        "AS",
+        "AT",
+        "BE",
+        "FOR",
+        "HE",
+        "I",
+        "IN",
+        "IS",
+        "IT",
+        "ME",
+        "MY",
+        "OF",
+        "ON",
+        "OR",
+        "OUR",
+        "SHE",
+        "THAT",
+        "THE",
+        "THEY",
+        "THIS",
+        "TO",
+        "US",
+        "WE",
+        "WITH",
+        "YOU",
+        "YOUR"
+      ]
+    },
+    "cslr_full": {
+      "min_glosses_per_sequence": 1,
+      "vocab_max_size": 20000,
+      "vocab_min_frequency": 1
+    }
+  },
+  "joint_layout": {
+    "num_joints": 52,
+    "num_coords_per_joint": 3,
+    "mask_channels_per_joint": 1,
+    "coord_feature_dim": 156,
+    "feature_dim": 208,
+    "pose_joints": [
+      "NOSE", "LEFT_SHOULDER", "RIGHT_SHOULDER", "LEFT_ELBOW", "RIGHT_ELBOW",
+      "LEFT_WRIST", "RIGHT_WRIST", "LEFT_HIP", "RIGHT_HIP", "MID_SHOULDERS"
+    ],
+    "pose_mediapipe_indices": [0, 11, 12, 13, 14, 15, 16, 23, 24],
+    "left_hand_joints_count": 21,
+    "right_hand_joints_count": 21
+  },
+  "normalization": {
+    "reference_joint_left": "LEFT_SHOULDER",
+    "reference_joint_right": "RIGHT_SHOULDER",
+    "scale_epsilon": 1e-3,
+    "missing_joint_fill": "forward_fill",
+    "missing_joint_default": [0.0, 0.0, 0.0]
+  },
+  "temporal": {
+    "downsample_factor": 2,
+    "target_fps": 15
+  },
+  "motion_features": {
+    "compute_velocity": true,
+    "compute_acceleration": false
+  },
+  "mediapipe": {
+    "task_model_path": "models/mediapipe/holistic_landmarker.task",
+    "min_face_detection_confidence": 0.5,
+    "min_face_suppression_threshold": 0.5,
+    "min_face_landmarks_confidence": 0.5,
+    "min_pose_detection_confidence": 0.5,
+    "min_pose_suppression_threshold": 0.5,
+    "min_pose_landmarks_confidence": 0.5,
+    "min_hand_landmarks_confidence": 0.5,
+    "pose_visibility_threshold": 0.5,
+    "pose_presence_threshold": 0.5,
+    "hand_visibility_threshold": null,
+    "hand_presence_threshold": null
+  },
+  "storage": {
+    "format": "npz",
+    "compress": true
+  }
+}

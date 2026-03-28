@@ -1,0 +1,4 @@
+{"dataset": "wlasl", "features_path": "/Volumes/T7/ASL/data/processed/keypoints/wlasl/65225.npz", "glosses": ["BOOK"], "id": "65225", "num_frames": 31, "selection": "goal_shared_vocab", "signer_id": 90, "split": "train"}
+{"dataset": "wlasl", "features_path": "/Volumes/T7/ASL/data/processed/keypoints/wlasl/68011.npz", "glosses": ["BOOK"], "id": "68011", "num_frames": 28, "selection": "goal_shared_vocab", "signer_id": 110, "split": "train"}
+{"dataset": "wlasl", "features_path": "/Volumes/T7/ASL/data/processed/keypoints/wlasl/68012.npz", "glosses": ["BOOK"], "id": "68012", "num_frames": 57, "selection": "goal_shared_vocab", "signer_id": 109, "split": "train"}
+{"dataset": "wlasl", "features_path": "/Volumes/T7/ASL/data/processed/keypoints/wlasl/69241.npz", "glosses": ["BOOK"], "id": "69241", "num_frames": 38, "selection": "goal_shared_vocab", "signer_id": 118, "split": "train"}
